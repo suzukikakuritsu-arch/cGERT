@@ -1,0 +1,36 @@
+name: gert-simulation
+
+on:
+  push:
+  workflow_dispatch:
+
+jobs:
+  run-simulation:
+
+    runs-on: ubuntu-latest
+
+    steps:
+
+    - name: checkout
+      uses: actions/checkout@v3
+
+    - name: setup python
+      uses: actions/setup-python@v4
+      with:
+        python-version: "3.10"
+
+    - name: install dependencies
+      run: |
+        pip install -r requirements.txt
+        sudo apt-get update
+        sudo apt-get install -y ffmpeg
+
+    - name: run simulation
+      run: |
+        python simulate_gert.py
+
+    - name: upload artifact
+      uses: actions/upload-artifact@v3
+      with:
+        name: gert-video
+        path: output/gert_simulation.mp4
