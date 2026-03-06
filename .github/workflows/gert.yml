@@ -1,4 +1,4 @@
-name: gert-simulation
+name: gert-visual-lab
 
 on:
   push:
@@ -6,7 +6,7 @@ on:
 
 jobs:
 
-  simulate:
+  run:
 
     runs-on: ubuntu-latest
 
@@ -24,12 +24,12 @@ jobs:
         sudo apt-get install -y ffmpeg
         pip install numpy matplotlib
 
-    - name: run simulation
+    - name: run visuals
       run: |
-        python simulate_gert_full.py
+        python gert_visual_lab.py
 
-    - name: upload results
+    - name: upload visuals
       uses: actions/upload-artifact@v4
       with:
-        name: gert-videos
+        name: gert-visuals
         path: output
