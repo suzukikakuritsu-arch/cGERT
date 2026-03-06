@@ -1,0 +1,35 @@
+name: gert-simulation
+
+on:
+  push:
+  workflow_dispatch:
+
+jobs:
+
+  simulate:
+
+    runs-on: ubuntu-latest
+
+    steps:
+
+    - uses: actions/checkout@v4
+
+    - uses: actions/setup-python@v5
+      with:
+        python-version: "3.11"
+
+    - name: install
+      run: |
+        sudo apt-get update
+        sudo apt-get install -y ffmpeg
+        pip install numpy matplotlib
+
+    - name: run simulation
+      run: |
+        python simulate_gert_full.py
+
+    - name: upload results
+      uses: actions/upload-artifact@v4
+      with:
+        name: gert-videos
+        path: output
