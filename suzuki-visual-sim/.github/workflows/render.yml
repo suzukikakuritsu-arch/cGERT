@@ -1,0 +1,33 @@
+# .github/workflows/render.yml
+name: run-simulation
+
+on:
+  workflow_dispatch:
+
+jobs:
+  render:
+    runs-on: ubuntu-latest
+
+    steps:
+
+    - uses: actions/checkout@v4
+
+    - name: setup python
+      uses: actions/setup-python@v5
+      with:
+        python-version: '3.10'
+
+    - name: install libs
+      run: |
+        pip install numpy matplotlib
+
+    - name: run simulation
+      run: python generate_visual.py
+
+    - name: upload movie
+      uses: actions/upload-artifact@v4
+      with:
+        name: suzuki-simulation
+        path: |
+          suzuki_emergence.mp4
+          suzuki_emergence.gif
